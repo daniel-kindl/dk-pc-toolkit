@@ -99,6 +99,21 @@ Each manifest entry records:
 
 See `docs/tool-policy.md` for the rules behind these fields.
 
+## Recommended hardware
+
+The minimum V0 hardware is:
+
+- 1 TB USB 3.2 Gen 2 portable SSD
+- separate 64 GB USB-A emergency boot flash drive
+- known-good USB-C to USB-C and USB-C to USB-A data cables
+- small protective case
+
+The current primary reference drive is the Samsung Portable SSD T7 Shield 1 TB. Kingston XS1000 1 TB is the value alternative.
+
+For removed-drive diagnostics and data recovery, add a powered SATA-to-USB adapter or dock, an M.2 NVMe-to-USB enclosure, and a separate recovery destination drive.
+
+See `docs/recommended-hardware.md` for the complete staged hardware guide.
+
 ## Repository layout
 
 ```text
@@ -106,7 +121,7 @@ See `docs/tool-policy.md` for the rules behind these fields.
 config/              Toolkit configuration
 manifests/           Tool metadata and acquisition policy
 scripts/             Build, update, inventory, and verification scripts
-docs/                Architecture, policy, and repair workflows
+docs/                Architecture, policy, hardware, and repair workflows
 ```
 
 ## Safety model
