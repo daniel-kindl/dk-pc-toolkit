@@ -103,14 +103,15 @@ See `docs/tool-policy.md` for the rules behind these fields.
 
 The minimum V0 hardware is:
 
-- 1 TB USB 3.2 Gen 2 portable SSD
+- 1 TB M.2 2280 NVMe TLC SSD
+- separate USB 3.2 Gen 2 10 Gbit/s NVMe enclosure with UASP, TRIM, S.M.A.R.T. passthrough, and boot support
 - separate 64 GB USB-A emergency boot flash drive
 - known-good USB-C to USB-C and USB-C to USB-A data cables
 - small protective case
 
-The current primary reference drive is the Samsung Portable SSD T7 Shield 1 TB. Kingston XS1000 1 TB is the value alternative.
+The main service drive is intentionally modular: the SSD and USB enclosure are separate replaceable components. USB4 is optional; 10 Gbit/s USB is the compatibility-focused default.
 
-For removed-drive diagnostics and data recovery, add a powered SATA-to-USB adapter or dock, an M.2 NVMe-to-USB enclosure, and a separate recovery destination drive.
+For removed-drive diagnostics and data recovery, add a powered SATA-to-USB adapter or dock, a second quick-open M.2 recovery enclosure, and a separate recovery destination drive.
 
 See `docs/recommended-hardware.md` for the complete staged hardware guide.
 
