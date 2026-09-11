@@ -7,12 +7,15 @@ The project defines the layout, manifests, validation, and service workflows for
 ## Goals
 
 - Boot on as many standard x86-64 PCs as practical.
-- Keep diagnostic and repair tools portable.
+- Keep Windows diagnostic and repair tools portable or standalone.
+- Avoid permanent installation on the target Windows system.
 - Make toolkit updates reproducible.
 - Verify downloads with published checksums or signatures when available.
 - Keep third-party licenses and redistribution restrictions explicit.
 - Provide short, repeatable troubleshooting workflows.
 - Prefer official upstream sources.
+
+A portable tool may still require administrator rights or load a temporary runtime driver when this is required for low-level hardware access. It must not require a permanent installed product to be part of the default toolkit.
 
 ## Planned disk layout
 
@@ -26,10 +29,12 @@ PC-TOOLKIT/
 │   ├── Hardware/
 │   ├── Storage/
 │   ├── Windows/
+│   ├── Drivers/
+│   ├── Security/
+│   ├── Files/
 │   ├── Network/
 │   ├── Recovery/
 │   └── Benchmark/
-├── Drivers/
 ├── Firmware/
 ├── Images/
 ├── Logs/
@@ -37,7 +42,7 @@ PC-TOOLKIT/
 └── Docs/
 ```
 
-## Initial tool set
+## V0 core tool set
 
 Boot and recovery:
 
@@ -45,28 +50,54 @@ Boot and recovery:
 - SystemRescue
 - Memtest86+
 - Rescuezilla
-- Clonezilla
 - Windows 11 installation/recovery media
-- Hiren's BootCD PE as an optional compatibility/recovery environment
 
-Portable Windows diagnostics:
+Portable Windows diagnostics and repair:
 
 - Microsoft Sysinternals Suite
 - HWiNFO Portable
-- CrystalDiskInfo
-- CrystalDiskMark
 - CPU-Z
 - GPU-Z
-- Display Driver Uninstaller
 - OCCT
+- CrystalDiskInfo
+- CrystalDiskMark
 - TestDisk / PhotoRec
-- 7-Zip
-- Wireshark
-- PuTTY / WinSCP
-- Rufus
-- Notepad++
+- FullEventLogView
+- BlueScreenView
+- Display Driver Uninstaller
+- Driver Store Explorer
+- Microsoft Safety Scanner
+- Emsisoft Emergency Kit
+- Everything
+- Notepad++ Portable
+- 7-Zip Extra
 
-The manifests decide which tools can be downloaded automatically and which tools require manual acquisition because of licensing, download flow, or redistribution restrictions.
+Optional tools:
+
+- Libre Hardware Monitor
+- PuTTY
+- WinSCP Portable
+- WizTree Portable
+- Clonezilla Live
+- Hiren's BootCD PE
+
+The default V0 intentionally excludes tools that duplicate core capability or require installation for their main purpose. For example, Wireshark is excluded because packet capture needs a capture driver, while Prime95 and FurMark are excluded because OCCT covers the default stress-testing requirement.
+
+## Tool metadata
+
+Each manifest entry records:
+
+- `priority`: `core` or `optional`
+- `mode`: portable, standalone, boot image, or boot manager
+- `risk`: `read-only`, `stress`, `write`, or `destructive`
+- `requires_admin`
+- `offline_capable`
+- official upstream source
+- update strategy
+- verification strategy
+- destination on the service drive
+
+See `docs/tool-policy.md` for the rules behind these fields.
 
 ## Repository layout
 
@@ -75,12 +106,12 @@ The manifests decide which tools can be downloaded automatically and which tools
 config/              Toolkit configuration
 manifests/           Tool metadata and acquisition policy
 scripts/             Build, update, inventory, and verification scripts
-docs/                Architecture and repair workflows
+docs/                Architecture, policy, and repair workflows
 ```
 
 ## Safety model
 
-A repair toolkit can destroy data if it is used incorrectly. Destructive actions such as partition changes, filesystem repair, disk cloning, secure erase, and bootloader modification must be explicit. Scripts in this repository must not automatically modify a target machine or disk unless the operator selects that action.
+A repair toolkit can destroy data if it is used incorrectly. Destructive actions such as partition changes, filesystem repair, disk cloning, driver removal, secure erase, and bootloader modification must be explicit. Scripts in this repository must not automatically modify a target machine or disk unless the operator selects that action.
 
 For failing storage devices, the default recovery principle is: **image first, repair later**.
 
