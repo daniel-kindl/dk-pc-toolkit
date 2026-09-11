@@ -33,6 +33,7 @@ PC-TOOLKIT/
 │   ├── Security/
 │   ├── Files/
 │   ├── Network/
+│   ├── Software/
 │   ├── Recovery/
 │   └── Benchmark/
 ├── Firmware/
@@ -69,19 +70,25 @@ Portable Windows diagnostics and repair:
 - Microsoft Safety Scanner
 - Emsisoft Emergency Kit
 - Everything
+- Advanced IP Scanner
+- Bulk Crap Uninstaller Portable
 - Notepad++ Portable
 - 7-Zip Extra
 
 Optional tools:
 
 - Libre Hardware Monitor
+- Geek Uninstaller
+- USBDeview
+- DevManView
+- ShellExView
 - PuTTY
 - WinSCP Portable
 - WizTree Portable
 - Clonezilla Live
 - Hiren's BootCD PE
 
-The default V0 intentionally excludes tools that duplicate core capability or require installation for their main purpose. For example, Wireshark is excluded because packet capture needs a capture driver, while Prime95 and FurMark are excluded because OCCT covers the default stress-testing requirement.
+The default V0 intentionally excludes tools that duplicate core capability or require installation for their main purpose. Wireshark is excluded because packet capture needs a capture driver. Prime95 and FurMark are excluded because OCCT covers the default stress-testing requirement. IObit Unlocker is excluded because Sysinternals Handle and Process Explorer already cover locked-file diagnostics and forced handle closure. IObit Uninstaller is excluded in favor of the self-contained portable Bulk Crap Uninstaller workflow.
 
 ## Tool metadata
 
@@ -131,7 +138,7 @@ docs/                Architecture, policy, hardware, and repair workflows
 
 ## Safety model
 
-A repair toolkit can destroy data if it is used incorrectly. Destructive actions such as partition changes, filesystem repair, disk cloning, driver removal, secure erase, and bootloader modification must be explicit. Scripts in this repository must not automatically modify a target machine or disk unless the operator selects that action.
+A repair toolkit can destroy data if it is used incorrectly. Destructive actions such as partition changes, filesystem repair, disk cloning, driver removal, software removal, forced handle closure, secure erase, and bootloader modification must be explicit. Scripts in this repository must not automatically modify a target machine or disk unless the operator selects that action.
 
 For failing storage devices, the default recovery principle is: **image first, repair later**.
 
