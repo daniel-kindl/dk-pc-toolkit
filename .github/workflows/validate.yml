@@ -1,0 +1,50 @@
+name: validate
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -f docs/architecture.md
+          test -f manifests/boot-tools.yaml
+          test -f manifests/windows-tools.yaml
+          test -f scripts/Initialize-Toolkit.ps1
+          test -f scripts/Get-ToolkitInventory.ps1
+
+      - name: Reject tracked binary payloads
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -E '\.(iso|img|exe|msi|zip|7z|rar)$' >/dev/null; then
+            echo 'Third-party binary payloads must not be committed.' >&2
+            git ls-files | grep -E '\.(iso|img|exe|msi|zip|7z|rar)$' >&2
+            exit 1
+          fi
+
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Get-ChildItem scripts -Filter '*.ps1' -Recurse | ForEach-Object {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | Format-List | Out-String | Write-Error
+            }
+          }
