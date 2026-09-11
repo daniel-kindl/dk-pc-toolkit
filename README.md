@@ -101,17 +101,21 @@ See `docs/tool-policy.md` for the rules behind these fields.
 
 ## Recommended hardware
 
-The minimum V0 hardware is:
+The minimum V0 hardware is intentionally small:
 
-- 1 TB M.2 2280 NVMe TLC SSD
-- separate USB 3.2 Gen 2 10 Gbit/s NVMe enclosure with UASP, TRIM, S.M.A.R.T. passthrough, and boot support
-- separate 64 GB USB-A emergency boot flash drive
-- known-good USB-C to USB-C and USB-C to USB-A data cables
-- small protective case
+- one 500 GB M.2 2280 NVMe SSD
+- one USB 3.2 Gen 2 10 Gbit/s NVMe enclosure with UASP, TRIM, S.M.A.R.T. passthrough, and boot support
 
-The main service drive is intentionally modular: the SSD and USB enclosure are separate replaceable components. USB4 is optional; 10 Gbit/s USB is the compatibility-focused default.
+The current reference V0 build is:
 
-For removed-drive diagnostics and data recovery, add a powered SATA-to-USB adapter or dock, a second quick-open M.2 recovery enclosure, and a separate recovery destination drive.
+```text
+Kingston NV3 500 GB
+└── AXAGON EEM2-UG2
+```
+
+The SSD and enclosure are separate replaceable components. 1 TB capacity is optional, not required. USB4 is also optional; 10 Gbit/s USB is the compatibility-focused default.
+
+Emergency boot media, a second quick-open M.2 recovery enclosure, SATA adapters, and a separate recovery destination drive are later-stage additions rather than V0 requirements.
 
 See `docs/recommended-hardware.md` for the complete staged hardware guide.
 
