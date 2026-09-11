@@ -101,7 +101,7 @@ See `docs/tool-policy.md` for the rules behind these fields.
 
 ## Recommended hardware
 
-The minimum V0 hardware is intentionally small:
+The minimum V0 storage hardware is intentionally small:
 
 - one 500 GB M.2 2280 NVMe SSD
 - one USB 3.2 Gen 2 10 Gbit/s NVMe enclosure with UASP, TRIM, S.M.A.R.T. passthrough, and boot support
