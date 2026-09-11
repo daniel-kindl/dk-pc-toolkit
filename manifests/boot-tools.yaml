@@ -1,64 +1,117 @@
-version: 1
+version: 2
+schema:
+  priority: [core, optional]
+  mode: [boot-image, boot-manager]
+  risk: [read-only, stress, write, destructive]
+  update_strategy: [manual, direct, release-api, vendor-resolver]
 tools:
   - id: ventoy
     name: Ventoy
     category: boot
+    priority: core
+    mode: boot-manager
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
     homepage: https://www.ventoy.net/
-    acquisition: manual
+    source: official
+    update_strategy: manual
+    verification: upstream-checksum-or-local-sha256
     destination: Firmware/Ventoy
-    verification: upstream
-    notes: Install and upgrade separately because Ventoy modifies disk partition metadata.
+    notes: Install and upgrade separately because Ventoy modifies disk partition metadata. The synchronizer must never select or repartition a physical disk automatically.
 
   - id: systemrescue
     name: SystemRescue
     category: recovery
+    priority: core
+    mode: boot-image
+    risk: destructive
+    requires_admin: false
+    offline_capable: true
     homepage: https://www.system-rescue.org/
-    acquisition: manual
+    source: official
+    update_strategy: vendor-resolver
+    verification: upstream-sha256-or-gpg
     destination: ISO/Recovery
-    verification: sha256-or-gpg
-    notes: Primary Linux recovery environment.
+    notes: Primary Linux recovery environment. Includes storage, filesystem, networking, imaging, and recovery tools.
 
   - id: memtest86plus
     name: Memtest86+
     category: memory
+    priority: core
+    mode: boot-image
+    risk: stress
+    requires_admin: false
+    offline_capable: true
     homepage: https://www.memtest.org/
-    acquisition: manual
+    source: official
+    update_strategy: release-api
+    verification: upstream-checksum-or-local-sha256
     destination: ISO/Recovery
-    verification: upstream
-    notes: Standalone memory diagnostics.
+    notes: Dedicated standalone memory diagnostics.
 
   - id: rescuezilla
     name: Rescuezilla
     category: imaging
+    priority: core
+    mode: boot-image
+    risk: destructive
+    requires_admin: false
+    offline_capable: true
     homepage: https://rescuezilla.com/
-    acquisition: manual
+    source: official
+    update_strategy: release-api
+    verification: upstream-checksum-or-local-sha256
     destination: ISO/Recovery
-    verification: upstream
-    notes: GUI disk imaging and cloning environment.
+    notes: Primary GUI disk imaging, cloning, backup, and restore environment.
+
+  - id: windows11
+    name: Windows 11 installation and recovery media
+    category: operating-system
+    priority: core
+    mode: boot-image
+    risk: destructive
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.microsoft.com/software-download/windows11
+    source: official
+    update_strategy: manual
+    verification: upstream-sha256
+    destination: ISO/Windows
+    notes: Acquire only through Microsoft's supported download flow. Used for Windows setup, recovery console, and repair operations.
 
   - id: clonezilla
     name: Clonezilla Live
     category: imaging
+    priority: optional
+    mode: boot-image
+    risk: destructive
+    requires_admin: false
+    offline_capable: true
     homepage: https://clonezilla.org/
-    acquisition: manual
+    source: official
+    update_strategy: vendor-resolver
+    verification: upstream-checksum-or-local-sha256
     destination: ISO/Recovery
-    verification: upstream
-    notes: Advanced imaging and cloning environment.
-
-  - id: windows11
-    name: Windows 11 installation media
-    category: operating-system
-    homepage: https://www.microsoft.com/software-download/windows11
-    acquisition: manual
-    destination: ISO/Windows
-    verification: manual
-    notes: Acquire only through Microsoft's supported download flow.
+    notes: Advanced fallback imaging and cloning environment. Rescuezilla covers the default V0 imaging workflow.
 
   - id: hirensbootcdpe
     name: Hiren's BootCD PE
     category: recovery
+    priority: optional
+    mode: boot-image
+    risk: destructive
+    requires_admin: false
+    offline_capable: true
     homepage: https://www.hirensbootcd.org/
-    acquisition: manual
+    source: official
+    update_strategy: manual
+    verification: upstream-checksum-or-local-sha256
     destination: ISO/Recovery
-    verification: upstream
-    notes: Optional Windows PE recovery environment.
+    notes: Optional Windows PE fallback. It is not the primary source for portable utilities because bundled tool versions can lag upstream releases.
+
+excluded:
+  - id: gparted-live
+    reason: SystemRescue already includes GParted and broader recovery capability.
+  - id: passmark-memtest86
+    reason: Memtest86+ is the default V0 memory test. A second dedicated memory environment is not required initially.

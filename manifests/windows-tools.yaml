@@ -1,121 +1,323 @@
-version: 1
+version: 2
+schema:
+  priority: [core, optional]
+  mode: [portable, standalone]
+  risk: [read-only, stress, write, destructive]
+  update_strategy: [manual, direct, release-api, vendor-resolver]
 tools:
   - id: sysinternals
     name: Microsoft Sysinternals Suite
     category: windows
+    priority: core
+    mode: portable
+    risk: write
+    requires_admin: false
+    offline_capable: true
     homepage: https://learn.microsoft.com/sysinternals/downloads/sysinternals-suite
-    acquisition: manual
+    source: official
+    update_strategy: direct
+    verification: authenticode-and-local-sha256
     destination: Tools/Windows/Sysinternals
-    verification: upstream
+    notes: Includes Process Explorer, Process Monitor, Autoruns, TCPView, RAMMap, PsTools, Sigcheck, and other diagnostics. Individual utilities can require elevation.
 
   - id: hwinfo
     name: HWiNFO Portable
     category: hardware
+    priority: core
+    mode: portable
+    risk: read-only
+    requires_admin: true
+    offline_capable: true
     homepage: https://www.hwinfo.com/download/
-    acquisition: manual
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
     destination: Tools/Hardware/HWiNFO
-    verification: upstream
-
-  - id: crystaldiskinfo
-    name: CrystalDiskInfo
-    category: storage
-    homepage: https://crystalmark.info/
-    acquisition: manual
-    destination: Tools/Storage/CrystalDiskInfo
-    verification: upstream
-
-  - id: crystaldiskmark
-    name: CrystalDiskMark
-    category: benchmark
-    homepage: https://crystalmark.info/
-    acquisition: manual
-    destination: Tools/Benchmark/CrystalDiskMark
-    verification: upstream
+    notes: Primary hardware inventory and sensor tool. Can load a runtime hardware-access driver.
 
   - id: cpuz
     name: CPU-Z
     category: hardware
+    priority: core
+    mode: portable
+    risk: read-only
+    requires_admin: true
+    offline_capable: true
     homepage: https://www.cpuid.com/softwares/cpu-z.html
-    acquisition: manual
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
     destination: Tools/Hardware/CPU-Z
-    verification: upstream
 
   - id: gpuz
     name: GPU-Z
     category: hardware
+    priority: core
+    mode: standalone
+    risk: read-only
+    requires_admin: false
+    offline_capable: true
     homepage: https://www.techpowerup.com/gpuz/
-    acquisition: manual
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
     destination: Tools/Hardware/GPU-Z
-    verification: upstream
-
-  - id: ddu
-    name: Display Driver Uninstaller
-    category: windows
-    homepage: https://www.wagnardsoft.com/
-    acquisition: manual
-    destination: Tools/Windows/DDU
-    verification: upstream
 
   - id: occt
     name: OCCT
     category: benchmark
+    priority: core
+    mode: standalone
+    risk: stress
+    requires_admin: true
+    offline_capable: true
     homepage: https://www.ocbase.com/
-    acquisition: manual
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
     destination: Tools/Benchmark/OCCT
-    verification: upstream
+    notes: Primary CPU, GPU, memory, and VRAM stability and stress tool.
+
+  - id: libre-hardware-monitor
+    name: Libre Hardware Monitor
+    category: hardware
+    priority: optional
+    mode: portable
+    risk: read-only
+    requires_admin: false
+    offline_capable: true
+    homepage: https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
+    source: official
+    update_strategy: release-api
+    verification: local-sha256
+    destination: Tools/Hardware/LibreHardwareMonitor
+    notes: Open-source fallback hardware monitor. Some sensors can require elevation.
+
+  - id: crystaldiskinfo
+    name: CrystalDiskInfo
+    category: storage
+    priority: core
+    mode: portable
+    risk: read-only
+    requires_admin: true
+    offline_capable: true
+    homepage: https://crystalmark.info/
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
+    destination: Tools/Storage/CrystalDiskInfo
+    notes: Primary SMART and NVMe health inspection tool.
+
+  - id: crystaldiskmark
+    name: CrystalDiskMark
+    category: benchmark
+    priority: core
+    mode: portable
+    risk: stress
+    requires_admin: false
+    offline_capable: true
+    homepage: https://crystalmark.info/
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
+    destination: Tools/Benchmark/CrystalDiskMark
+    notes: Storage benchmark. Writes test data and can create substantial disk load.
 
   - id: testdisk
     name: TestDisk and PhotoRec
     category: recovery
+    priority: core
+    mode: portable
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
     homepage: https://www.cgsecurity.org/
-    acquisition: manual
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
     destination: Tools/Recovery/TestDisk
-    verification: upstream
+    notes: Partition, boot-sector, filesystem recovery, and file carving. Prefer imaging failing media before repair attempts.
 
-  - id: wireshark
-    name: Wireshark
-    category: network
-    homepage: https://www.wireshark.org/
-    acquisition: manual
-    destination: Tools/Network/Wireshark
-    verification: upstream
+  - id: full-event-log-view
+    name: FullEventLogView
+    category: windows
+    priority: core
+    mode: standalone
+    risk: read-only
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.nirsoft.net/utils/full_event_log_view.html
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Windows/FullEventLogView
 
-  - id: putty
-    name: PuTTY
-    category: network
-    homepage: https://www.chiark.greenend.org.uk/~sgtatham/putty/
-    acquisition: manual
-    destination: Tools/Network/PuTTY
-    verification: upstream
+  - id: bluescreenview
+    name: BlueScreenView
+    category: windows
+    priority: core
+    mode: standalone
+    risk: read-only
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.nirsoft.net/utils/blue_screen_view.html
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Windows/BlueScreenView
+    notes: Fast BSOD minidump inspection. Deeper analysis can use WinDbg separately if needed.
 
-  - id: winscp
-    name: WinSCP
-    category: network
-    homepage: https://winscp.net/
-    acquisition: manual
-    destination: Tools/Network/WinSCP
-    verification: upstream
+  - id: ddu
+    name: Display Driver Uninstaller
+    category: drivers
+    priority: core
+    mode: portable
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
+    homepage: https://www.wagnardsoft.com/
+    source: official
+    update_strategy: vendor-resolver
+    verification: upstream-sha256
+    destination: Tools/Drivers/DDU
+    notes: Removes GPU driver packages and related state. Prefer Safe Mode for repair workflows.
 
-  - id: sevenzip
-    name: 7-Zip
-    category: utility
-    homepage: https://www.7-zip.org/
-    acquisition: manual
-    destination: Tools/Windows/7-Zip
-    verification: upstream
+  - id: driver-store-explorer
+    name: Driver Store Explorer
+    category: drivers
+    priority: core
+    mode: portable
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
+    homepage: https://github.com/lostindark/DriverStoreExplorer
+    source: official
+    update_strategy: release-api
+    verification: local-sha256
+    destination: Tools/Drivers/DriverStoreExplorer
+    notes: DriverStore inspection and package removal. Removal actions can make devices unusable until drivers are restored.
 
-  - id: rufus
-    name: Rufus
-    category: utility
-    homepage: https://rufus.ie/
-    acquisition: manual
-    destination: Tools/Windows/Rufus
-    verification: upstream
+  - id: microsoft-safety-scanner
+    name: Microsoft Safety Scanner
+    category: security
+    priority: core
+    mode: standalone
+    risk: write
+    requires_admin: true
+    offline_capable: true
+    homepage: https://learn.microsoft.com/defender-endpoint/safety-scanner-download
+    source: official
+    update_strategy: direct
+    verification: authenticode-and-local-sha256
+    destination: Tools/Security/MicrosoftSafetyScanner
+    notes: Scanner expires after 10 days. Synchronization must refresh it instead of treating it as a long-lived binary.
+
+  - id: emsisoft-emergency-kit
+    name: Emsisoft Emergency Kit
+    category: security
+    priority: core
+    mode: portable
+    risk: write
+    requires_admin: true
+    offline_capable: true
+    homepage: https://www.emsisoft.com/en/home/emergency-kit/
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
+    destination: Tools/Security/EmsisoftEmergencyKit
+    notes: Malware signatures should be refreshed when network access is available.
+
+  - id: everything
+    name: Everything
+    category: files
+    priority: core
+    mode: portable
+    risk: read-only
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.voidtools.com/
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Files/Everything
 
   - id: notepadplusplus
     name: Notepad++
     category: utility
+    priority: core
+    mode: portable
+    risk: write
+    requires_admin: false
+    offline_capable: true
     homepage: https://notepad-plus-plus.org/
-    acquisition: manual
+    source: official
+    update_strategy: release-api
+    verification: upstream-sha256
     destination: Tools/Windows/Notepad++
-    verification: upstream
+
+  - id: sevenzip-extra
+    name: 7-Zip Extra
+    category: utility
+    priority: core
+    mode: portable
+    risk: write
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.7-zip.org/
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Windows/7-Zip
+    notes: Standalone console and extraction components; no shell integration or installed file associations.
+
+  - id: putty
+    name: PuTTY
+    category: network
+    priority: optional
+    mode: standalone
+    risk: write
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.chiark.greenend.org.uk/~sgtatham/putty/
+    source: official
+    update_strategy: vendor-resolver
+    verification: upstream-signature-or-local-sha256
+    destination: Tools/Network/PuTTY
+
+  - id: winscp
+    name: WinSCP Portable
+    category: network
+    priority: optional
+    mode: portable
+    risk: write
+    requires_admin: false
+    offline_capable: true
+    homepage: https://winscp.net/
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
+    destination: Tools/Network/WinSCP
+
+  - id: wiztree
+    name: WizTree Portable
+    category: storage
+    priority: optional
+    mode: portable
+    risk: read-only
+    requires_admin: true
+    offline_capable: true
+    homepage: https://diskanalyzer.com/
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
+    destination: Tools/Storage/WizTree
+
+excluded:
+  - id: wireshark
+    reason: Packet capture requires a capture driver, so it does not meet the default zero-install target.
+  - id: rufus
+    reason: The service drive itself uses Ventoy and V0 does not need a second media writer in the default toolkit.
+  - id: prime95
+    reason: OCCT covers the default CPU stress-testing requirement.
+  - id: furmark
+    reason: OCCT covers the default GPU stress-testing requirement.
