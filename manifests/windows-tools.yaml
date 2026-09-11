@@ -1,0 +1,121 @@
+version: 1
+tools:
+  - id: sysinternals
+    name: Microsoft Sysinternals Suite
+    category: windows
+    homepage: https://learn.microsoft.com/sysinternals/downloads/sysinternals-suite
+    acquisition: manual
+    destination: Tools/Windows/Sysinternals
+    verification: upstream
+
+  - id: hwinfo
+    name: HWiNFO Portable
+    category: hardware
+    homepage: https://www.hwinfo.com/download/
+    acquisition: manual
+    destination: Tools/Hardware/HWiNFO
+    verification: upstream
+
+  - id: crystaldiskinfo
+    name: CrystalDiskInfo
+    category: storage
+    homepage: https://crystalmark.info/
+    acquisition: manual
+    destination: Tools/Storage/CrystalDiskInfo
+    verification: upstream
+
+  - id: crystaldiskmark
+    name: CrystalDiskMark
+    category: benchmark
+    homepage: https://crystalmark.info/
+    acquisition: manual
+    destination: Tools/Benchmark/CrystalDiskMark
+    verification: upstream
+
+  - id: cpuz
+    name: CPU-Z
+    category: hardware
+    homepage: https://www.cpuid.com/softwares/cpu-z.html
+    acquisition: manual
+    destination: Tools/Hardware/CPU-Z
+    verification: upstream
+
+  - id: gpuz
+    name: GPU-Z
+    category: hardware
+    homepage: https://www.techpowerup.com/gpuz/
+    acquisition: manual
+    destination: Tools/Hardware/GPU-Z
+    verification: upstream
+
+  - id: ddu
+    name: Display Driver Uninstaller
+    category: windows
+    homepage: https://www.wagnardsoft.com/
+    acquisition: manual
+    destination: Tools/Windows/DDU
+    verification: upstream
+
+  - id: occt
+    name: OCCT
+    category: benchmark
+    homepage: https://www.ocbase.com/
+    acquisition: manual
+    destination: Tools/Benchmark/OCCT
+    verification: upstream
+
+  - id: testdisk
+    name: TestDisk and PhotoRec
+    category: recovery
+    homepage: https://www.cgsecurity.org/
+    acquisition: manual
+    destination: Tools/Recovery/TestDisk
+    verification: upstream
+
+  - id: wireshark
+    name: Wireshark
+    category: network
+    homepage: https://www.wireshark.org/
+    acquisition: manual
+    destination: Tools/Network/Wireshark
+    verification: upstream
+
+  - id: putty
+    name: PuTTY
+    category: network
+    homepage: https://www.chiark.greenend.org.uk/~sgtatham/putty/
+    acquisition: manual
+    destination: Tools/Network/PuTTY
+    verification: upstream
+
+  - id: winscp
+    name: WinSCP
+    category: network
+    homepage: https://winscp.net/
+    acquisition: manual
+    destination: Tools/Network/WinSCP
+    verification: upstream
+
+  - id: sevenzip
+    name: 7-Zip
+    category: utility
+    homepage: https://www.7-zip.org/
+    acquisition: manual
+    destination: Tools/Windows/7-Zip
+    verification: upstream
+
+  - id: rufus
+    name: Rufus
+    category: utility
+    homepage: https://rufus.ie/
+    acquisition: manual
+    destination: Tools/Windows/Rufus
+    verification: upstream
+
+  - id: notepadplusplus
+    name: Notepad++
+    category: utility
+    homepage: https://notepad-plus-plus.org/
+    acquisition: manual
+    destination: Tools/Windows/Notepad++
+    verification: upstream
