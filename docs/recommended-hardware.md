@@ -2,7 +2,7 @@
 
 This document defines the recommended physical hardware for DK PC Toolkit.
 
-The project does not require one exact vendor or model. Reference models show the intended class of hardware. Prefer reliable, standard hardware over the cheapest option.
+The project does not require one exact vendor or model. Reference models show the intended class of hardware. Prefer reliable, standard, replaceable hardware over the cheapest option or a sealed proprietary external drive.
 
 Recommendations were last reviewed in September 2026.
 
@@ -14,41 +14,73 @@ Build the kit in stages. The first stage is enough to start using DK PC Toolkit.
 
 #### 1. Main service drive
 
-Recommended specification:
+The preferred design is a standard M.2 NVMe SSD installed in a separate USB enclosure.
 
-- 1 TB portable SSD
-- USB 3.2 Gen 2, 10 Gbit/s
-- USB-C device connector
+This keeps the storage device and USB bridge replaceable. A failed enclosure does not force replacement of the SSD, and the SSD can be connected directly to an M.2 slot if USB bridge troubleshooting is required.
+
+##### SSD specification
+
+Recommended:
+
+- 1 TB capacity
+- M.2 2280 NVMe
+- TLC NAND preferred
+- PCIe 3.0 or PCIe 4.0
+- no factory heatsink
+- low idle and active power consumption preferred
+- five-year warranty preferred
+- S.M.A.R.T. and TRIM support
+- reputable controller and NAND vendor
+
+A high-end PCIe 4.0 or PCIe 5.0 SSD is not required. A 10 Gbit/s USB enclosure limits practical sequential throughput to about 1 GB/s, so reliability, power use, thermals, and endurance matter more than the SSD's native peak benchmark speed.
+
+DRAM is useful but not required for this role. A good TLC HMB drive is acceptable because the toolkit workload is dominated by boot images, portable utilities, logs, and occasional large sequential transfers.
+
+Avoid QLC when a similarly priced TLC drive is available. Avoid unknown SSD brands and drives with unclear NAND or controller revisions.
+
+Reference SSD class:
+
+- Samsung 990 EVO Plus 1 TB or another reputable 1 TB TLC M.2 2280 NVMe drive
+
+The reference model is not a performance requirement. A lower-cost reliable TLC NVMe drive is sufficient when it has good warranty and thermal behavior.
+
+##### Enclosure specification
+
+Required:
+
+- M.2 NVMe PCIe support
+- M.2 2280 support
+- USB 3.2 Gen 2, 10 Gbit/s minimum
+- USB-C connector on the enclosure
 - UASP support
-- durable enclosure
-- no vendor software required for normal use
-- compatible with both USB-C and USB-A hosts through carried cables or adapters
+- TRIM support
+- S.M.A.R.T. passthrough
+- boot support
+- no proprietary driver requirement
+- aluminum or other thermally conductive enclosure
+- thermal pad between SSD and enclosure
+- removable USB cable
 
-Primary reference model:
+Preferred:
 
-- Samsung Portable SSD T7 Shield 1 TB
+- known bridge chipset such as Realtek RTL9210-series or ASMedia equivalent
+- stable firmware
+- screw-secured enclosure for the permanently installed toolkit SSD
+- USB-C to USB-C and USB-C to USB-A connectivity in the carried cable set
 
-Why:
+USB4 or Thunderbolt is optional. It adds cost and usually does not improve compatibility with older repair targets. USB 3.2 Gen 2 at 10 Gbit/s is the default because it provides broad compatibility and is already fast enough for the toolkit workload.
 
-- USB 3.2 Gen 2
-- up to 1,050 MB/s sequential read and 1,000 MB/s sequential write
-- IP65-rated enclosure
-- rated for drops up to 3 m
-- compact enough to remain permanently in the toolkit case
+Reference enclosure class:
 
-Value reference model:
+- AXAGON EEM2-UG2 or another metal 10 Gbit/s NVMe enclosure with UASP, TRIM, S.M.A.R.T. passthrough, and boot support
 
-- Kingston XS1000 1 TB
+A dual-protocol NVMe + M.2 SATA enclosure is acceptable, but it is not required for the main service drive.
 
-Why:
+##### Main-drive operating rule
 
-- USB 3.2 Gen 2
-- up to 1,050 MB/s sequential read and 1,000 MB/s sequential write
-- very small and light
-- USB Type-A compatibility through the included cable/adapter set
-- five-year limited warranty
+Treat the assembled NVMe drive and enclosure as one permanent toolkit device during normal use. Do not repeatedly remove the toolkit SSD to inspect other computers' drives.
 
-The T7 Shield is the default recommendation when durability matters more than minimum cost. The XS1000 is the value option when compact size and price matter more.
+Use a separate quick-open enclosure for foreign M.2 drives in Stage 2.
 
 Do not use the main service drive as the only destination for recovered data. Keep recovered files or full disk images on a separate destination drive when practical.
 
@@ -64,8 +96,8 @@ Recommended specification:
 Purpose:
 
 - emergency SystemRescue or recovery environment
-- fallback when a firmware does not boot the main Ventoy SSD
-- fallback when the main service drive is unavailable
+- fallback when firmware does not boot the main Ventoy SSD
+- fallback when the main service drive or USB enclosure is unavailable
 
 A basic reputable-brand flash drive is sufficient. Capacity and compatibility matter more than peak benchmark speed.
 
@@ -78,6 +110,17 @@ Always carry:
 - one spare known-good USB cable
 
 A failed or charge-only cable can look like a disk, USB controller, or firmware problem. The toolkit must always contain a known-good replacement cable.
+
+#### 4. Protective case
+
+Use a small case that keeps the following items together:
+
+- main NVMe service drive
+- emergency flash drive
+- USB cables and adapters
+- later Stage 2 adapters
+
+The enclosure does not need to be ruggedized like a sealed portable SSD if the complete kit is stored in a protective case.
 
 ### Stage 2: drive access and recovery
 
@@ -103,23 +146,38 @@ This adapter is useful for:
 
 For older systems, an adapter that also supports IDE/PATA can be useful, but IDE support is not required for V0.
 
-#### M.2 NVMe to USB enclosure
+#### Separate M.2 recovery enclosure
+
+This enclosure is different from the enclosure that permanently contains the toolkit SSD.
 
 Recommended specification:
 
 - M.2 NVMe PCIe support
+- M.2 2230, 2242, 2260, and 2280 support preferred
 - USB 3.2 Gen 2, 10 Gbit/s or better
-- 2280 support at minimum
-- tool-free or quick-open design preferred
-- thermal pad and metal enclosure preferred
+- tool-free or quick-open design
+- thermal pad and metal enclosure
+- UASP
+- S.M.A.R.T. passthrough
+- USB-C and USB-A host connectivity
+
+Optional but useful:
+
+- support for both NVMe and M.2 SATA drives
+
+A dual-protocol enclosure is more useful here than for the main service SSD because this device is intended to inspect unknown drives removed from other systems.
+
+Reference recovery-enclosure class:
+
+- AXAGON EEM2-SB2 or another tool-free 10 Gbit/s enclosure that supports both NVMe and M.2 SATA when broad compatibility is wanted
 
 Purpose:
 
-- inspect a removed NVMe SSD
+- inspect a removed NVMe or M.2 SATA SSD
 - recover files from a non-booting PC
-- clone or image an NVMe device outside the source system
+- clone or image an M.2 device outside the source system
 
-Do not assume that one enclosure supports both NVMe and M.2 SATA. Confirm protocol support before purchase.
+Do not assume that every M.2 enclosure supports both NVMe and M.2 SATA. Confirm protocol support before connecting a drive.
 
 #### Separate recovery destination drive
 
@@ -163,18 +221,22 @@ These are not required for the normal DK PC Toolkit workflow. A hardware write b
 
 For a new kit with no existing hardware, buy these items first:
 
-1. Samsung Portable SSD T7 Shield 1 TB, or Kingston XS1000 1 TB as the value alternative.
-2. Reputable 64 GB USB-A flash drive.
-3. USB-C to USB-C and USB-C to USB-A known-good data cables.
-4. Small protective case for the drive, flash drive, and cables.
+1. Reputable 1 TB TLC M.2 2280 NVMe SSD.
+2. Metal USB 3.2 Gen 2 10 Gbit/s NVMe enclosure with UASP, TRIM, S.M.A.R.T. passthrough, and boot support.
+3. Reputable 64 GB USB-A emergency flash drive.
+4. USB-C to USB-C and USB-C to USB-A known-good data cables.
+5. Small protective case for the drive, flash drive, and cables.
 
-This is enough to build and use V0. Add SATA and NVMe adapters when the toolkit starts being used for removed-drive diagnostics and data recovery.
+This is enough to build and use V0. Add the separate SATA and M.2 recovery adapters when the toolkit starts being used for removed-drive diagnostics and data recovery.
 
 ## Hardware rules
 
+- Prefer standard, modular, replaceable components.
 - Prefer plug-and-play hardware that needs no installed driver package.
 - Prefer standard USB mass-storage and USB networking classes where possible.
 - Keep at least one known-good cable for comparison testing.
+- Keep the main toolkit SSD installed in its own enclosure during normal use.
+- Use a separate enclosure or adapter for drives removed from repair targets.
 - Never keep recovered customer or personal data on the service drive longer than necessary.
 - Do not image a failing source disk back onto itself.
 - Use external power for 3.5-inch SATA disks.
