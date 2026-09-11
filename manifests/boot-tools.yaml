@@ -1,0 +1,64 @@
+version: 1
+tools:
+  - id: ventoy
+    name: Ventoy
+    category: boot
+    homepage: https://www.ventoy.net/
+    acquisition: manual
+    destination: Firmware/Ventoy
+    verification: upstream
+    notes: Install and upgrade separately because Ventoy modifies disk partition metadata.
+
+  - id: systemrescue
+    name: SystemRescue
+    category: recovery
+    homepage: https://www.system-rescue.org/
+    acquisition: manual
+    destination: ISO/Recovery
+    verification: sha256-or-gpg
+    notes: Primary Linux recovery environment.
+
+  - id: memtest86plus
+    name: Memtest86+
+    category: memory
+    homepage: https://www.memtest.org/
+    acquisition: manual
+    destination: ISO/Recovery
+    verification: upstream
+    notes: Standalone memory diagnostics.
+
+  - id: rescuezilla
+    name: Rescuezilla
+    category: imaging
+    homepage: https://rescuezilla.com/
+    acquisition: manual
+    destination: ISO/Recovery
+    verification: upstream
+    notes: GUI disk imaging and cloning environment.
+
+  - id: clonezilla
+    name: Clonezilla Live
+    category: imaging
+    homepage: https://clonezilla.org/
+    acquisition: manual
+    destination: ISO/Recovery
+    verification: upstream
+    notes: Advanced imaging and cloning environment.
+
+  - id: windows11
+    name: Windows 11 installation media
+    category: operating-system
+    homepage: https://www.microsoft.com/software-download/windows11
+    acquisition: manual
+    destination: ISO/Windows
+    verification: manual
+    notes: Acquire only through Microsoft's supported download flow.
+
+  - id: hirensbootcdpe
+    name: Hiren's BootCD PE
+    category: recovery
+    homepage: https://www.hirensbootcd.org/
+    acquisition: manual
+    destination: ISO/Recovery
+    verification: upstream
+    notes: Optional Windows PE recovery environment.
