@@ -18,7 +18,7 @@ tools:
     update_strategy: direct
     verification: authenticode-and-local-sha256
     destination: Tools/Windows/Sysinternals
-    notes: Includes Process Explorer, Process Monitor, Autoruns, TCPView, RAMMap, PsTools, Sigcheck, and other diagnostics. Individual utilities can require elevation.
+    notes: Includes Process Explorer, Process Monitor, Autoruns, TCPView, RAMMap, PsTools, Sigcheck, Handle, and other diagnostics. Individual utilities can require elevation. Handle and Process Explorer cover locked-file diagnostics and forced handle closure.
 
   - id: hwinfo
     name: HWiNFO Portable
@@ -241,6 +241,36 @@ tools:
     verification: local-sha256
     destination: Tools/Files/Everything
 
+  - id: advanced-ip-scanner
+    name: Advanced IP Scanner
+    category: network
+    priority: core
+    mode: portable
+    risk: read-only
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.advanced-ip-scanner.com/
+    source: official
+    update_strategy: vendor-resolver
+    verification: authenticode-and-local-sha256
+    destination: Tools/Network/AdvancedIPScanner
+    notes: LAN discovery and inventory. Treat optional remote-control or share-access actions as write operations even though scanning itself is read-only.
+
+  - id: bulk-crap-uninstaller
+    name: Bulk Crap Uninstaller
+    category: software
+    priority: core
+    mode: portable
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
+    homepage: https://github.com/Klocman/Bulk-Crap-Uninstaller
+    source: official
+    update_strategy: release-api
+    verification: local-sha256
+    destination: Tools/Software/BCUninstaller
+    notes: Use the self-contained portable distribution. Batch uninstall, forced uninstall, and leftover cleanup can remove software or files permanently.
+
   - id: notepadplusplus
     name: Notepad++
     category: utility
@@ -269,6 +299,66 @@ tools:
     verification: local-sha256
     destination: Tools/Windows/7-Zip
     notes: Standalone console and extraction components; no shell integration or installed file associations.
+
+  - id: geek-uninstaller
+    name: Geek Uninstaller
+    category: software
+    priority: optional
+    mode: standalone
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
+    homepage: https://geekuninstaller.com/
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Software/GeekUninstaller
+    notes: Single-file portable alternative. Free edition is intended for personal use; check current license terms before broader use.
+
+  - id: usbdeview
+    name: USBDeview
+    category: devices
+    priority: optional
+    mode: standalone
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
+    homepage: https://www.nirsoft.net/utils/usb_devices_view.html
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Windows/USBDeview
+    notes: Shows current and historical USB devices and can disconnect or uninstall device entries.
+
+  - id: devmanview
+    name: DevManView
+    category: devices
+    priority: optional
+    mode: standalone
+    risk: destructive
+    requires_admin: true
+    offline_capable: true
+    homepage: https://www.nirsoft.net/utils/device_manager_view.html
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Windows/DevManView
+    notes: Portable device-manager alternative. Disable, uninstall, or device-state changes can break hardware until restored.
+
+  - id: shellexview
+    name: ShellExView
+    category: windows
+    priority: optional
+    mode: standalone
+    risk: write
+    requires_admin: false
+    offline_capable: true
+    homepage: https://www.nirsoft.net/utils/shexview.html
+    source: official
+    update_strategy: vendor-resolver
+    verification: local-sha256
+    destination: Tools/Windows/ShellExView
+    notes: Useful for diagnosing Explorer crashes and context-menu problems by disabling shell extensions.
 
   - id: putty
     name: PuTTY
@@ -321,3 +411,7 @@ excluded:
     reason: OCCT covers the default CPU stress-testing requirement.
   - id: furmark
     reason: OCCT covers the default GPU stress-testing requirement.
+  - id: iobit-unlocker
+    reason: Locked-file diagnostics and forced handle closure are already covered by Sysinternals Handle and Process Explorer, so a separate unlocker would duplicate core capability.
+  - id: iobit-uninstaller
+    reason: Bulk Crap Uninstaller provides a self-contained portable workflow and better matches the zero-install toolkit policy.
