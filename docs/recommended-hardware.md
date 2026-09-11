@@ -8,11 +8,11 @@ Recommendations were last reviewed in September 2026.
 
 ## Purchase order
 
-Build the kit in stages. V0 intentionally starts with the minimum hardware needed to create and use the toolkit. Recovery adapters, fallback media, and physical service hardware can be added later.
+Build the kit in stages. V0 intentionally starts with the minimum storage hardware needed to create and use the toolkit. Recovery adapters, fallback media, and physical service hardware can be added later.
 
 ### Stage 1: V0 minimum
 
-V0 requires exactly two storage components:
+V0 storage hardware requires exactly two components:
 
 1. one M.2 NVMe SSD
 2. one USB enclosure for that SSD
@@ -183,7 +183,7 @@ These items are not required for normal DK PC Toolkit use.
 
 ## Hardware rules
 
-- Keep V0 simple: one SSD and one enclosure.
+- Keep V0 storage simple: one SSD and one enclosure.
 - Prefer standard, modular, replaceable components.
 - Prefer plug-and-play hardware that needs no installed driver package.
 - Do not pay for internal SSD performance that the USB bridge cannot use.
